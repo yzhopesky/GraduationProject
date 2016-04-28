@@ -1,0 +1,87 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>XiuGai</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+
+        //修改方法
+        function alter() {
+            var sPassword3 = "";
+            //var sUserAccount = $("#sUserAccount").val();
+            var sPassword1 = $("#sPassword1").val();
+            var sPassword2 = $("#sPassword2").val();
+
+            //判断两次密码是否一致
+            if (sPassword1 === sPassword2) {
+                sPassword3 = sPassword1;
+            } else {
+                $.messager.alert("消息", "密码不一致，请检查", "Info");
+                return false;
+            }
+
+            //ajax 局部刷新
+            $.ajax({
+                url: '@Url.Action("AlterPassWord", "Home")',
+                dataType: 'json',
+                type: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    
+                    password: sPassword3
+                }),
+                success: function (d) {
+                    if (d.Success == 0) {
+                        $.messager.alert("消息", d.Message, "Info", function () {
+                            // window.location.href = '@Url.Action("Index", "Home")';
+                        });
+
+                        return true;
+                    } else {
+                        $.messager.alert("消息", d.Message, "Info");
+                        return false;
+                    }
+                }
+            });
+        }
+
+
+    </script>
+</head>
+<body>
+    <div class="formbody">
+        <div class="formtitle"><span>修改信息</span></div>
+        <ul class="forminfo">
+            @*<li>
+                <label>用户账户:</label>
+                <input name="userAccount" id="sUserAccount" type="text" class="dfinput" /><i id="userAccount_msg">不能超过30个字符</i>
+            </li>*@
+            <li>
+                <label>输入密码</label><input name="password1" id="sPassword1" type="password" class="dfinput" value="" /><i id="password1_msg">密码6位以上</i>
+            </li>
+            <li>
+                <label>确认密码</label><input name="password2" id="sPassword2" type="password" class="dfinput" value="" /><i id="password2_msg"></i>
+            </li>
+
+            <div style="display:block; float:left">
+                <a class="easyui-linkbutton asearch enter" data-options="" onclick="alter() ">确定</a>
+            </div>
+        </ul>
+    </div>
+
+</body>
+
+</html>

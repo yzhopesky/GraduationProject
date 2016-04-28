@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>欢迎登录后台管理系统</title>
+
+   
+
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+ 
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/Style1.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            $('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
+            $(window).resize(function () {
+                $('.loginbox').css({ 'position': 'absolute', 'left': ($(window).width() - 692) / 2 });
+            })
+        });
+
+        //登陆
+        function login() {
+            var account = $("#account").val();
+            var password = $("#password").val();
+            var typeID = $('input:radio[name="radio"]:checked').val();
+            
+            if (account == "请输入账户" || account =='') {
+                $.messager.alert("消息", "账户不能为空！", "Info");
+                return false;
+            }
+            if (password == '') {
+                $.messager.alert("消息", "密码不能为空！", "Info");
+                return false;
+            }
+            if (typeID == null) {
+                $.messager.alert("消息", "请选择登陆的类别！", "Info");
+                return false;
+            }
+
+            //ajax 局部刷新
+            $.ajax({
+                url: '@Url.Action("AdminUserLoginIn", "Home")',
+                dataType: 'json',
+                type: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    account: account,
+                    password: password,
+                    typeID: typeID
+                }),
+                //1是管理员 2是教师 3 是学生
+                success: function (ret) {
+                    if (ret.Success == 1) {
+
+                        $.messager.alert("消息", ret.Message, "Info", function () {
+                            window.location.href = '@Url.Action("Operate", "Handle")';
+                        });
+                        return true;
+                    } else if (ret.Success == 2) {
+                        $.messager.alert("消息", ret.Message, "Info", function () {
+                            window.location.href = '@Url.Action("TeacherOperate", "Handle")';
+                        });
+                        return true;
+                    } else if (ret.Success == 3) {
+                        $.messager.alert("消息", ret.Message, "Info", function () {
+                            window.location.href = '@Url.Action("StudentOperate", "Handle")';
+                        });
+                        return true;
+                    }
+                }
+            });
+        }
+    </script>
+
+
+
+</head>
+
+<body style="background-color: #a10000; background-image: url(../../Source/images/light.png); background-repeat: no-repeat; background-position: center top; overflow: hidden;">
+
+    <div class="loginbody">
+
+        <span class="systemlogo"></span>
+
+        <div class="loginbox">
+            <ul>
+                <li><input name="account" id="account" type="text" class="loginuser" value="请输入账户" data-options="prompt:'账户',iconCls:'icon-tip',iconWidth:38,required:true" onclick=" JavaScript: this.value = '' " /></li>
+                <li><input name="password" id="password" type="password" class="loginpwd" value="" data-options="prompt:'密码',iconCls:'icon-tip',iconWidth:38,required:true" onclick=" JavaScript: this.value = '' " /></li>
+                <li><input name="validateCode" id="validateCode" style="display: none;" type="text" class="loginuser" value="验证码" onclick=" JavaScript: this.value = '' " /></li>
+                <li><label><input name="radio" id="administrator" type="radio" value="1" />管理员登陆</label><label><input name="radio" id="teacher" type="radio" value="2" />教师登陆</label><label><input name="radio" id="student" type="radio" value="3" />学生登陆</label></li>
+                <li><input name="" type="submit" class="loginbtn" onclick="login()" value="登 录" /></li>
+                <li> <div class="message" data-bind="html: message"></div>  </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="loginbm">
+        CopyRight © 2015 石家庄学院教育技术  版权所有
+    </div>
+
+
+</body>
+</html>

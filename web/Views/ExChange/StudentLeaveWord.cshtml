@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+
+    <script src="~/Scripts/kindeditor-min.js"></script>
+    <script src="~/Scripts/zh_CN.js"></script>
+    <link href="~/Source/css/default.css" rel="stylesheet" />
+    <script type="text/javascript">
+        KindEditor.ready(function (k) {
+            k.create('#k_textarea', {
+                uploadJson: '/Source/upload_json.ashx',//使用这个一般处理程序 实现处理图片的上传  暂时尚未实现
+                fileManagerJson: '/Source/file_manager_json.ashx',//使用这个一般处理程序实现图片的存储  暂时尚未实现
+                allowFileManager: true,
+            })
+        });
+
+
+
+    </script>
+</head>
+<body>
+    <form action="@Url.Action("StudentTextWrite", "ExChange")" method="post">
+        <div>
+            <p>
+                <textarea id="k_textarea" name="k_textarea" style="width:800px; height:400px "></textarea>
+            </p>
+            <p>
+                <input type="submit" name="name" value="提交" />
+            </p>
+        </div>
+    </form>
+</body>
+</html>

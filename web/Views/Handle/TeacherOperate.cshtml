@@ -1,0 +1,146 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>学生信息管理界面</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <link href="~/Content/Common.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    @*引用外部的js文件*@
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+        function LayOut() {
+            //$.post("/Home/LayOut", {}, function (msg) {
+            //    window.location.href = "/Home/Index";
+            //}, "text")
+            $.ajax({
+                url: '@Url.Action("LayOut", "Home")',
+                dataType:"html",
+                type: 'post',
+                data: {},
+                success: function (msg) {
+                    $.messager.alert("消息", "确定退出吗？", "Info", function () {
+                        window.location.href = "/Home/Index";
+                    });
+                   
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    @*主体架构模块*@
+    <div class="easyui-layout" id="layout" style="height: 99%;">
+        @*黄色的横条*@
+        <div data-options="region:'north'" style="height: 35px; background-color: #ffa500; font-size: 15px; color: white; line-height: 25px; vertical-align: middle">
+            <div id="account"></div>
+            <div class="contentcenter" style="height: 30px; position: absolute; left: 45%; top: 2px; text-align: center">
+                教育技术教师管理平台
+            </div>
+            <div style="text-align: right; height: 30px; position: absolute; right: 1px; top: 2px;">
+                <a href="#" class="easyui-menubutton" data-options="menu:'#helpFile',iconCls:'icon-help'">帮助</a>
+
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:'true',iconCls:'icon-shape_square_go'" onclick=" LayOut()">退出</a>
+            </div>
+            @*应用的东西下载模块*@
+            <div id="helpFile" style="width: 100px;">
+                <div>
+                    <a href="/Content/客户管理操作手册.pptx">ppt 帮助下载</a>
+                </div>
+                <div>
+                    <a href="/Content/安装说明.avi">视频帮助下载</a>
+                </div>
+                <div><a href="/Content/ERP.pptx">ERP帮助文档下载</a></div>
+                <div><a href="#">文档帮助下载</a></div>
+            </div>
+
+        </div>
+        @*底层的表*@
+        <div data-options="region:'south',split:true" style="height: 50px; text-align: center; color: #6B6B6B">
+            <p>2015  石家庄学院教育技术版权所有</p>
+        </div>
+
+        @*左侧的导航栏*@
+        <div id="west" data-options="region:'west',split:true" title="导航菜单" style="width: 200px;">
+            @*左侧第栏目栏*@
+            <div id="000" class="easyui-accordion" data-options="fit:true,border:false,title:'ada'">
+                @*左侧第一个栏目*@
+                <div id="002" title="师资管理" class="contentcenter" style="font-size: 12px;">
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('教师信息', '@Url.Action("Teacher", "Teacher")', 'icon-group_add')">教师信息</a>
+                    @*<a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('教师增加', '@Url.Action("AddTeacher", "Teacher")', 'icon-group_add')">教师增加</a>*@
+                </div>
+                @*左侧第二个栏目*@
+                <div id="002" title="学生管理" class="contentcenter" style="font-size: 12px;">
+
+                    @*<a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('学生信息列表', '@Url.Action("StudentInfo", "Student")', 'icon-group_add')">学生信息列表</a>
+                        <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('学生信息增加', 'http://www.baidu.com', 'icon-group_add')">学生信息增加</a>*@
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('学生学籍信息', '@Url.Action("StudentRoll", "Student")', 'icon-group_add')">学生学籍信息</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('学生课程图表', '@Url.Action("CoureseChart", "Student")', 'icon-group_add')">学生课程图表</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('增加学生信息', '@Url.Action("AddStudent", "Student")', 'icon-group_add')">学生学籍增加</a>
+                </div>
+                @*左侧第三个栏目
+                    <div id="002" title="学籍管理" class="contentcenter" style="font-size: 12px;">
+                        <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('添加客户','http://www.baidu.com','icon-group_add')">大学一班</a>
+                    </div>
+                            @*左侧第四个栏目*@
+                <div id="002" title="成绩管理" class="contentcenter" style="font-size: 12px;">
+
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('成绩信息', '@Url.Action("StudentScore", "Student")', 'icon-group_add')">成绩信息</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('学生信息增加', '@Url.Action("AddStudentScore", "Student")', 'icon-group_add')">成绩增加</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('图表信息分析', '@Url.Action("SomeScoreAnalysis", "Teacher")', 'icon-group_add')">成绩分析</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('成绩导出', '@Url.Action("PutExcel", "Handle")', 'icon-group_add')">成绩导出</a>
+                </div>
+                @*左侧第四个栏目*@
+                @*<div id="002" title="成绩可视化" class="contentcenter" style="font-size: 12px;">
+
+                   
+
+                </div>*@
+                @*左侧第五个栏目*@
+                <div id="002" title="交流天地" class="contentcenter" style="font-size: 12px;">
+
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('心灵广场', '@Url.Action("Square", "ExChange")', 'icon-group_add')">交流广场</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('教师寄语', '@Url.Action("TeacherLeaveWord", "ExChange")', 'icon-group_add')">教师寄语</a>
+                    @*<a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('学生留言','@Url.Action("StudentLeaveWord", "ExChange")','icon-group_ad')">学生留言</a>*@
+
+
+                </div>
+                @*左侧第五个栏目*@
+                <div id="002" title="系统设置" class="contentcenter" style="font-size: 12px;">
+
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('修改密码','@Url.Action("ChangeMM", "Home")','icon-group_ad')">修改密码</a>
+
+                </div>
+                @*左侧第六个栏目*@
+                <div id="002" title="联系作者" class="contentcenter" style="font-size: 12px;">
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('个人网页', 'http://starjoneyang.lofter.com/', 'icon-group_add')">个人网页</a>
+                    <a class="easyui-linkbutton" data-options="iconCls:'icon-group_add'" style="width: 99%;border: none" href="javascript:void(0)" onclick="addTab('联系方式','@Url.Action("PerTouch", "Home")','icon-group_add')">联系方式</a>
+
+                </div>
+            </div>
+        </div>
+
+
+        @*主页面*@
+        <div id="mycenter" data-options="region:'center',iconCls:'icon-ok'" style="overflow: hidden">
+            <div class="easyui-tabs" id="div_main" style="width: 100%">
+                <div title="首页" style="margin: 100px 100px; width: 99%;">
+                    <div style="font-size: 40px; color: #CD4F39;">欢迎使用</div>
+                    <div style="font-size: 30px; color: #CD4F39;">简洁的学生信息管理系统</div>
+                    <div style="font-size: 30px; color: #CD4F39;">管理系统</div>
+                    <div>2015-12-5  2:35</div>
+                </div>
+            </div>
+        </div>
+    </div>@*结束主体架构*@
+</body>
+</html>

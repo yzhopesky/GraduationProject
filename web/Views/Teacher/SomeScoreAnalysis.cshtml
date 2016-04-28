@@ -1,0 +1,76 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SomeScoreAnalysis</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+
+        function Select() {
+
+            var UserName = $("#UserName").val();
+            var UserNumber = $("#UserNumber").val();
+            $.ajax({
+                url: "@Url.Action("GetTrueOrFalse", "Teacher")",
+                dataType: "json",
+                type: "post",
+                data: {
+                    userName: UserName,
+                    userNumber: UserNumber
+                },
+                success: function (d) {
+                    if (d.Success == 0) {
+                        window.location.href = "@Url.Action("ScoreAnalyze", "Teacher")?userName=" + escape(UserName) + "&userNumber=" + UserNumber + "";
+                    } else {
+
+                        $.messager.alert("消息", d.Message);
+                        $("#UserName").val("");
+                        $("#UserNumber").val("");
+                    }
+
+                }
+
+            });
+
+        }
+
+
+
+    </script>
+
+</head>
+<body>
+
+    <div class="formbody">
+
+        <div class="formtitle"><span>查询信息</span></div>
+
+        <ul class="forminfo">
+            <li>
+                <label>姓名:</label>
+                <input name="userAccount" id="UserName" type="text" class="dfinput" /><i id="userAccount_msg">姓名或者学号（二者其中一个即可）</i>
+            </li>
+            <li>
+                <label>学号：</label>
+                <input name="userAccount" id="UserNumber" type="text" class="dfinput" />
+            </li>
+
+
+        </ul>
+    </div>
+    <div style="display: block; float: left">
+        <a class="easyui-linkbutton asearch enter" data-options="" onclick="Select() ">可视化分析</a>
+    </div>
+</body>
+</html>

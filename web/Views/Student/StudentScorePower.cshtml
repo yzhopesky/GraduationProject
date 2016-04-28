@@ -1,0 +1,109 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Teacher</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/style.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            init();
+        });
+        //初始化加载数据
+        function init() {
+            $("#tt").datagrid({
+                url: '@Url.Action("GetSingeStudentScore", "Student")',
+                striped: 'true',
+                pagination: 'true',
+                fitColumns: 'true',
+                pageNumber: 1,
+                pageSize: 15,
+                pageList: [5, 10, 15, 20, 25],
+                queryParams:
+                {
+
+                },
+                type: "post",
+                columns: [
+                    [
+                     { field: 'ck', checkbox: true },
+                     { field: 'stuNum', title: '学生学号', width: 100 },
+                    { field: 'stuName', title: '学生姓名', width: 100 },
+                     { field: 'stuTime', title: '第几次考试', width: 100 },
+                    { field: 'chinese', title: '语文', width: 100 },
+                    { field: 'math', title: '数学', width: 100 },
+                      { field: 'english', title: '英语', width: 100 },
+                    { field: 'history', title: '历史', width: 100 },
+                    { field: 'geography', title: '地理', width: 100 },
+                      { field: 'political', title: '政治', width: 100 },
+                    { field: 'physics', title: '物理', width: 100 },
+                    { field: 'chemistry', title: '化学', width: 100 },
+                    { field: 'biology', title: '生物', width: 100 },
+                    {
+                        field: 'createTime', title: '创建时间',
+                        formatter: function (value, row, index) {
+                            value = ChangeDateFormat(value);
+                            return value;
+                        },
+                        width: 100
+                    }
+                    ]
+                ]
+            });
+
+        }
+
+        //查看第几次月考
+        function lookTest() {
+            var count = $("#count").textbox("getValue");
+
+            $("#tt").datagrid("load", {
+                count: count
+            });
+        }
+
+       
+
+
+          
+        
+
+
+
+    </script>
+
+</head>
+<body>
+
+    <div class="dj-input-title">
+
+        <div id="content1" style="float: right">
+            <input type="text" class="easyui-textbox dj-input" id="count" style="height: 33px; line-height: 33px" /><span>&nbsp;</span>
+        </div>
+
+        <div style="display: block; float: right">
+            <a class="easyui-linkbutton asearch enter" data-options="" onclick="lookTest() ">查看第几次月考：</a>
+        </div>
+
+    </div>
+    <div class="clear"></div>
+    <div>
+        <table id="tt" style="height: 460px"></table>
+    </div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddTeacher</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript">
+        //保存方法
+        function add() {
+
+            var sUserAccount = $("#sUserAccount").val();
+            var sUserGender = $("#sUserGender").val();
+            var IDCard = $("#IDCard").val();
+            var sPhone = $("#sPhone").val();
+            var adress = $("#adress").val();
+            var course = $("#course").val();
+
+
+            //ajax 局部刷新
+            $.ajax({
+                url: '@Url.Action("AddTeacherInfo", "Teacher")',
+                dataType: 'json',
+                type: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    sUserAccount: sUserAccount,
+                    sUserGender: sUserGender,
+                    IDCard: IDCard,
+                    sPhone: sPhone,
+                    adress: adress,
+                    course: course
+                }),
+                success: function (d) {
+                    if (d.Success == 0) {
+                        $.messager.alert("消息", d.Message, "Info", function () {
+                            window.location.href = '@Url.Action("Teacher", "Teacher")';
+                        });
+                        
+                        return true;
+                    } else {
+                        $.messager.alert("消息", d.Message, "Info");
+                        return false;
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+    <div class="formbody">
+
+        <div class="formtitle"><span>修改信息</span></div>
+
+        <ul class="forminfo">
+            <li>
+                <label>教师姓名:</label>
+                <input name="userAccount" id="sUserAccount" type="text" class="dfinput" /><i id="userAccount_msg">不能超过30个字符</i>
+            </li>
+            <li>
+                <label>性别：</label>
+                <input name="userAccount" id="sUserGender" type="text" class="dfinput" />
+            </li>
+
+            <li>
+                <label>身份证：</label><input name="IDCard" id="IDCard" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>手机号：</label><input name="telePhone" id="sPhone" type="text" class="dfinput" value="" />
+            </li>
+
+            <li>
+                <label>地址：</label><input name="adress" id="adress" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>所教学科：</label><input name="course" id="course" type="text" class="dfinput" value="" />
+            </li>
+
+        </ul>
+    </div>
+    <div style="display: block; float: left">
+        <a class="easyui-linkbutton asearch enter" data-options="" onclick="add() ">保存</a>
+    </div>
+
+</body>
+</html>

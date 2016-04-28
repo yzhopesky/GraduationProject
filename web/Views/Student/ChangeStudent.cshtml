@@ -1,0 +1,193 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>查看信息</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/style.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            Init();
+        });
+        function Init() {
+            var Request = new Object();
+            Request = GetRequest();
+
+            var studentID = Request['studentID'];
+
+            $.ajax({
+                url: '@Url.Action("GetInfomationBy", "Student")',
+                type: 'post',
+                data: {
+
+                    stuID: studentID
+                },
+                success: function (d) {
+                    //alert(d[0].studentName);
+                    $("#studentID").val(d[0].studentID);
+                    $("#studentName").val(d[0].studentName);
+                    $("#stuGender").val(d[0].stuGender);
+                    $("#stuBirthdate").val(ChangeDateFormat(d[0].stuBirthdate));
+                    $("#stuNation").val(d[0].stuNation);
+                    $("#stuAdress").val(d[0].stuAdress);
+                    $("#stuHealth").val(d[0].stuHealth);
+                    $("#stuClass").val(d[0].stuClass);
+                    $("#stuSchoolSystem").val(d[0].stuSchoolSystem);
+                    $("#stuDorm").val(d[0].stuDorm);
+                    $("#stuEmail").val(d[0].stuEmail);
+                    $("#stuPhone").val(d[0].stuPhone);
+                    $("#stuPostCode").val(d[0].stuPostCode);
+                    $("#stuIDNumber").val(d[0].stuIDNumber);
+                    $("#stuRemark").val(d[0].stuRemark);
+                },
+                error: function () {
+                    return false;
+                }
+
+            });
+
+        }
+
+        //修改方法
+        function change() {
+
+            var studentID = $("#studentID").val();
+            var studentName = $("#studentName").val();
+            var stuGender = $("#stuGender").val();
+            var stuBirthdate = $("#stuBirthdate").val();
+            var stuNation = $("#stuNation").val();
+            var stuAdress = $("#stuAdress").val();
+            var stuHealth = $("#stuHealth").val();
+            var stuClass = $("#stuClass").val();
+            var stuSchoolSystem = $("#stuSchoolSystem").val();
+            var stuDorm = $("#stuDorm").val();
+            var stuEmail = $("#stuEmail").val();
+            var stuPhone = $("#stuPhone").val();
+            var stuPostCode = $("#stuPostCode").val();
+            var stuIDNumber = $("#stuIDNumber").val();
+            var stuRemark = $("#stuRemark").val();
+
+            var model = {
+                studentID: studentID,
+                studentName: studentName,
+                stuGender: stuGender,
+                stuBirthdate: stuBirthdate,
+                stuNation: stuNation,
+                stuAdress: stuAdress,
+                stuHealth: stuHealth,
+                stuClass: stuClass,
+                stuSchoolSystem: stuSchoolSystem,
+                stuDorm: stuDorm,
+                stuEmail: stuEmail,
+                stuPhone: stuPhone,
+                stuPostCode: stuPostCode,
+                stuIDNumber: stuIDNumber,
+                stuRemark: stuRemark
+
+
+            }
+
+            //ajax 局部刷新
+            $.ajax({
+                url: '@Url.Action("ChangeStudentInfomationByID", "Student")',
+                dataType: 'json',
+                type: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    studentInformation: model
+                }),
+                success: function (d) {
+                    if (d.Success == 0) {
+                        $.messager.alert("消息", d.Message, "Info", function () {
+                            window.location.href = '@Url.Action("StudentRoll", "Student")';
+                        });
+
+                        return true;
+                    } else {
+                        $.messager.alert("消息", d.Message, "Info");
+                        return false;
+                    }
+                }
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+    <div class="formbody">
+
+        <div class="formtitle"><span>增加信息</span></div>
+
+        <ul class="forminfo">
+            <li>
+                <label>学生学号：</label>
+                <input name="userAccount" id="studentID" type="text" class="dfinput" disabled="disabled" /><i id="userAccount_msg">不能改动</i>
+            </li>
+            <li>
+                <label>学生姓名：</label>
+                <input name="userAccount" id="studentName" type="text" class="dfinput" />
+            </li>
+
+            <li>
+                <label>学生性别：</label><input name="IDCard" id="stuGender" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>出生日期：</label><input name="telePhone" id="stuBirthdate" type="text" class="dfinput" value="" />
+            </li>
+
+            <li>
+                <label>学生民族：</label><input name="adress" id="stuNation" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>家庭住址：</label><input name="course" id="stuAdress" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>健康状况：</label><input name="course" id="stuHealth" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>学生班级：</label><input name="course" id="stuClass" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>所在学院：</label><input name="course" id="stuSchoolSystem" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>学生宿舍：</label><input name="course" id="stuDorm" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>学生邮件：</label><input name="course" id="stuEmail" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>学生手机：</label><input name="course" id="stuPhone" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>所在地邮编：</label><input name="course" id="stuPostCode" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>学生身份证号：</label><input name="course" id="stuIDNumber" type="text" class="dfinput" value="" />
+            </li>
+            <li>
+                <label>何时何种奖惩：</label><input name="course" id="stuRemark" type="text" class="dfinput" value="" />
+            </li>
+
+
+        </ul>
+    </div>
+    <div style="display: block; float: left">
+        <a class="easyui-linkbutton asearch enter" data-options="" onclick="change() ">保存</a>
+    </div>
+
+</body>
+</html>

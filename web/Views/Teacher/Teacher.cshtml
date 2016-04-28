@@ -1,0 +1,100 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Teacher</title>
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/IconExtension.css" rel="stylesheet" />
+    <link href="~/Scripts/jquery-easyui-1.4.2/themes/icon.css" rel="stylesheet" />
+    <link href="~/Source/css/style.css" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/jquery.easyui.min.js"></script>
+    <script src="~/Scripts/jquery-easyui-1.4.2/locale/easyui-lang-zh_CN.js"></script>
+    <script src="~/Scripts/Common.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            init();
+        });
+        //初始化加载数据
+        function init() {
+            $("#tt").datagrid({
+                url: '@Url.Action("GetTeacherList", "Teacher")',
+                striped: 'true',
+                pagination: 'true',
+                fitColumns: 'true',
+                pageNumber: 1,
+                pageSize: 15,
+                pageList: [5, 10, 15, 20, 25],
+                queryParams:
+                {
+
+                },
+                type:"post",
+                columns: [
+                    [
+                         { field: 'ck', checkbox: true },
+                { field: 'teacherName', title: '教师姓名', width: 100 },
+
+                { field: 'teacherGender', title: '教师性别', width: 100 },
+                { field: 'teacherPhone', title: '教师手机', width: 100 },
+                 { field: 'teacherIDCard', title: '身份证', width: 100 },
+                { field: 'teacherBeiYong', title: '所教学科', width: 100 },
+
+                {
+                    field: 'teacherDate', title: '添加时间',
+                    formatter: function (value, row, index) {
+                        value = ChangeDateFormat(value);
+                        return value;
+                    },
+                    width: 100
+                }
+                    ]
+                ]
+            });
+
+        }
+
+        //模糊查询
+        function dosearch() {
+            var keywords = $("#keyWord").textbox("getValue");
+
+            $("#tt").datagrid("load", {
+                keyword: keywords
+
+            });
+        };
+
+
+
+
+
+    </script>
+
+</head>
+<body>
+  
+    <div class="dj-input-title">
+        
+        <div id="content1" style="float: right">
+            <input type="text" class="easyui-textbox dj-input"  id="keyWord" style="height: 33px; line-height: 33px" /><span>&nbsp;</span>
+        </div>
+        
+        <div style="display: block; float: right">
+            <a class="easyui-linkbutton asearch enter" data-options="" onclick=" dosearch() ">搜索</a>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div>
+        <table id="tt" style="height: 460px"></table>
+    </div>
+
+
+
+</body>
+</html>

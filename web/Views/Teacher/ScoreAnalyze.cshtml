@@ -1,0 +1,204 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/Common.js"></script>
+
+</head>
+
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="height:400px"></div>
+    <!-- ECharts单文件引入 -->
+    <script src="~/Scripts/echarts.js"></script>
+    <script type="text/javascript">
+        var Request = new Object();
+        Request = GetRequest();
+        var stuName = unescape(Request["userName"]);
+        var stuNumber = Request["userNumber"];
+        // alert(stuName);
+
+        var Shuju = new Array();
+        var Shuju1 = new Array();
+        var Shuju2 = new Array();
+        var Shuju3 = new Array();
+        var Shuju4 = new Array();
+        var Shuju5 = new Array();
+        var Shuju6 = new Array();
+        var Shuju7 = new Array();
+        var Shuju8 = new Array();
+
+
+        var result1;
+        $(function () {
+            init();
+        });
+        function init() {
+            //var stuNum = $("#").val();
+            //var StudentName = $("#").val();
+
+            //ajax 局部刷新
+            $.ajax({
+                url: '@Url.Action("GetScore", "Teacher")',
+                dataType: 'json',
+                type: 'post',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({
+                    stuNum: stuNumber,
+                    StudentName: stuName
+                }),
+                success: function (d) {
+                    for (var i = 0; i < d.length; i++) {
+                        Shuju.push(d[i].chinese),
+                        Shuju1.push(d[i].math),
+                        Shuju2.push(d[i].english),
+                        Shuju3.push(d[i].history),
+                        Shuju4.push(d[i].geography),
+                        Shuju5.push(d[i].political),
+                        Shuju6.push(d[i].physics),
+                        Shuju7.push(d[i].chemistry),
+                        Shuju8.push(d[i].biology)
+                    }
+                    //alert(Shuju8[0]);
+                    //var result = {
+                    //    Chinese: Shuju.join(',')
+                    //};
+
+
+
+                    // 路径配置
+                    require.config({
+                        paths: {
+                            echarts: 'http://echarts.baidu.com/build/dist'
+                        }
+                    });
+
+                    // 使用
+                    require(
+                        [
+                            'echarts',
+                            'echarts/chart/line' // 使用柱状图就加载bar模块，按需加载
+                        ],
+                        function (ec) {
+                            // 基于准备好的dom，初始化echarts图表
+                            var myChart = ec.init(document.getElementById('main'));
+
+                            var option = {
+                                tooltip: {
+                                    trigger: 'axis'
+                                },
+                                legend: {
+                                    data: ['语文', '数学', '英语', '历史', '地理', '政治', '物理', '化学', '生物']
+                                },
+                                toolbox: {
+                                    show: true,
+                                    feature: {
+                                        mark: { show: true },
+                                        dataView: { show: true, readOnly: false },
+                                        magicType: { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
+                                        restore: { show: true },
+                                        saveAsImage: { show: true }
+                                    }
+                                },
+                                calculable: false,
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        boundaryGap: false,
+                                        data: ['一', '二', '三', '四', '五', '六', '日']
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '语文',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [Shuju[0], Shuju[1], Shuju[2], Shuju[3], Shuju[4], Shuju[5]]
+                                    },
+                                    {
+                                        name: '数学',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [Shuju1[0], Shuju1[1], Shuju1[2], Shuju1[3], Shuju1[4], Shuju1[5]]
+                                    },
+                                    {
+                                        name: '英语',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [Shuju2[0], Shuju2[1], Shuju2[2], Shuju2[3], Shuju2[4], Shuju2[5]]
+                                    },
+
+                                    {
+                                        name: '历史',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [Shuju3[0], Shuju3[1], Shuju3[2], Shuju3[3], Shuju3[4], Shuju3[5]]
+                                    },
+                                    {
+                                        name: '地理',
+                                        type: 'line',
+                                        stack: '总量',
+                                        data: [Shuju4[0], Shuju4[1], Shuju4[2], Shuju4[3], Shuju4[4], Shuju4[5]]
+                                    },
+
+                                     {
+                                         name: '政治',
+                                         type: 'line',
+                                         stack: '总量',
+                                         data: [Shuju5[0], Shuju5[1], Shuju5[2], Shuju5[3], Shuju5[4], Shuju5[5]]
+                                     },
+
+                                     {
+                                         name: '物理',
+                                         type: 'line',
+                                         stack: '总量',
+                                         data: [Shuju6[0], Shuju6[1], Shuju6[2], Shuju6[3], Shuju6[4], Shuju6[5]]
+                                     },
+
+                                      {
+                                          name: '化学',
+                                          type: 'line',
+                                          stack: '总量',
+                                          data: [Shuju7[0], Shuju7[1], Shuju7[2], Shuju7[3], Shuju7[4], Shuju7[5]]
+                                      },
+
+                                      {
+                                          name: '生物',
+                                          type: 'line',
+                                          stack: '总量',
+                                          data: [Shuju8[0], Shuju8[1], Shuju8[2], Shuju8[3], Shuju8[4], Shuju8[5]]
+                                      }
+                                ]
+                            };
+
+
+                            // 为echarts对象加载数据
+                            myChart.setOption(option);
+                        }
+                    );
+                }
+            });
+
+
+        }
+
+
+    </script>
+
+
+</body>
+</html>

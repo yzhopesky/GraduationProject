@@ -1,0 +1,169 @@
+﻿/*这存放一些通用的CSS样式*/
+html {
+    height: 100%;
+        }
+
+body {
+    height: 98%;
+    font-size: 16px;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: blue;
+   
+}
+
+.center {
+    margin: 0px auto;
+}
+
+.contentcenter {
+    text-align: center;
+}
+
+.empinput {
+    width: 220px;
+}
+
+ .aleft {
+    margin-left: 45px;   
+     color: black;
+}
+  .aleftForm {
+    margin-left:2px;   
+     color: black;
+}
+    .aleftType {
+    margin-left:15px;   
+     color: black;
+}
+ /*a.link {
+     color:#0062ff
+ }
+ a:visited {
+     color: red;
+ }*/
+
+.aright {
+     margin-left: 125px;
+}
+
+.divtitle {
+    background: #e0ecff;
+    height: 35px;
+    line-height: 35px;
+    vertical-align: middle;
+}
+
+.searchboxwidth {
+    width: 300px;
+}
+
+.divsearch {
+    margin-top: 10px;
+}
+
+.divmenu {
+    background: #e0ecff;
+    font-size: 16px;
+}
+
+.datagrid-header-row td {
+    height: 40px;
+    text-align: center;
+        }
+
+.divtable td {
+     text-align: center;
+ }
+ .aexport  {
+     position: absolute;
+     right: 10px;
+ }
+ .asearch  {
+     color: white;
+ }
+ .asearch span {
+     background-color: #ff4500;
+     
+     text-align: center;
+ }
+ .tlabel {
+     text-align: left;
+     vertical-align: top;
+     width: 100px;
+     padding: 5px;
+ }
+ .pname {
+     color: #1e90ff;
+     height: 15px;
+     width: 100px;
+ }
+ .divsimple {
+     position: absolute; margin-top: -25px; right: 15px;
+ }
+ .divsenior {
+     background-color:#f5f5f5;
+ }
+ .senior {
+     margin-top: 5px;
+ }
+.firstlinkbtn {
+    margin-left: 20px;
+}
+.nextlinkbtn {
+    margin-left: 12px;
+}
+.tdtext {
+    width: 100px;
+    height: 32px;
+}
+.tdtext1 {
+    width: 80px;
+    height: 32px;
+}
+.tdshort {
+    width: 240px;
+    height: 32px;
+}
+.tdshort1 {
+    width: 225px;
+    height: 32px;
+}
+.tdlong {
+    width: 590px;
+    height: 32px;
+}
+.tdcontroll {
+     width: 220px;
+    height: 28px;
+}
+.tdcontrolllong {
+     width: 570px;
+    height: 28px;
+}
+.tdadress {
+    width: 182px;
+    margin-left: 13px;
+}
+.panelsupplierbase {
+    width: 750px;
+    height: auto;
+}
+ .divsimple {
+     position: absolute; margin-top: -25px; right: 15px;
+ }
+ .divsenior {
+     background-color:#f5f5f5;
+ }
+ .senior {
+     margin-top: 5px;
+ }
+ /*新建用的panel宽高*/
+ .panelcreate {
+     height: auto;
+     width: 750px;
+     font-size: 22px;
+ }
